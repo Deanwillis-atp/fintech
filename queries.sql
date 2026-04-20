@@ -85,17 +85,22 @@ mysql> select sector, avg(price), avg(change_1M) from sp500 group by sector;
 +------------------------+--------------------+-----------------------+
 12 rows in set (0.001 sec)
 
-mysql> select * from sp500 order by marketcap DESC limit 5;
-+--------+------------------+------------+--------+--------+-----------+-----------+-----------+-----------+-----------+----------+------+------------------------+--------------------------------------------+
-| Ticker | Company          | MarketCap  | Price  | Weight | Change_1D | Change_1M | Change_1Y | Change_5Y | Volume_1D | PE_Ratio | Beta | Sector                 | Industry                                   |
-+--------+------------------+------------+--------+--------+-----------+-----------+-----------+-----------+-----------+----------+------+------------------------+--------------------------------------------+
-| NVDA   | NVIDIA Corp      |    4900824 | 201.68 | 0.0757 |    0.0168 |    0.1086 |     0.852 |     14.11 | 147784255 |    41.14 | 2.31 | Information Technology | Semiconductors                             |
-| GOOGL  | Alphabet Class A | 4133302.96 | 341.68 |  0.032 |    0.0168 |    0.0989 |     1.152 |      2.31 |  23460601 |    31.61 | 1.15 | Communication Services | Interactive Media & Services               |
-| GOOG   | Alphabet Class C |  4105721.8 |  339.4 | 0.0318 |    0.0199 |    0.0969 |      1.11 |      2.28 |  17897038 |    31.44 | 1.15 | Communication Services | Interactive Media & Services               |
-| AAPL   | Apple Inc        | 3967284.37 | 270.23 | 0.0613 |    0.0259 |    0.0629 |     0.272 |      1.21 |  53864425 |    34.33 | 1.08 | Information Technology | Technology Hardware, Storage & Peripherals |
-| MSFT   | Microsoft Corp   | 3139482.06 | 422.79 | 0.0485 |     0.006 |    0.0585 |      0.07 |      0.79 |  43518272 |    26.45 | 1.12 | Information Technology | Systems Software                           |
-+--------+------------------+------------+--------+--------+-----------+-----------+-----------+-----------+-----------+----------+------+------------------------+--------------------------------------------+
-5 rows in set (0.001 sec)
+mysql> SELECT Ticker, Company, MarketCap FROM sp500 ORDER BY MarketCap DESC LIMIT 10;
++--------+--------------------+------------+
+| Ticker | Company            | MarketCap  |
++--------+--------------------+------------+
+| NVDA   | NVIDIA Corp        |    4900824 |
+| GOOGL  | Alphabet Class A   | 4133302.96 |
+| GOOG   | Alphabet Class C   |  4105721.8 |
+| AAPL   | Apple Inc          | 3967284.37 |
+| MSFT   | Microsoft Corp     | 3139482.06 |
+| AMZN   | Amazon.com Inc     | 2694619.87 |
+| AVGO   | Broadcom Inc       | 1924832.71 |
+| META   | Meta Platforms Inc | 1741721.69 |
+| TSLA   | Tesla Inc          | 1503298.48 |
+| WMT    | Walmart Inc        | 1016480.99 |
++--------+--------------------+------------+
+10 rows in set (0.001 sec)
 
 mysql> SELECT sector ,avg(PE_ratio) from sp500 where beta > 1 GROUP BY sector;
 +------------------------+---------------------+
@@ -114,5 +119,34 @@ mysql> SELECT sector ,avg(PE_ratio) from sp500 where beta > 1 GROUP BY sector;
 | Consumer Staples       |             -179.93 |
 +------------------------+---------------------+
 11 rows in set (0.001 sec)
+
+mysql> SELECT Sector, AVG(Change_1Y) FROM sp500 GROUP BY Sector ORDER BY AVG(Change_1Y) DESC;
++------------------------+-----------------------+
+| Sector                 | AVG(Change_1Y)        |
++------------------------+-----------------------+
+| Information Technology |    1.0510142857142866 |
+| Energy                 |   0.39418181818181813 |
+| Industrials            |    0.3192151898734176 |
+| Materials              |    0.3096153846153845 |
+| Communication Services |   0.21000000000000005 |
+| Consumer Discretionary |   0.20831249999999998 |
+| Utilities              |    0.1645483870967742 |
+| Financials             |   0.15252000000000002 |
+| Health Care            |   0.08447457627118644 |
+| Real Estate            |   0.02867741935483871 |
+| Consumer Staples       | -0.028472222222222218 |
+| --                     |                  NULL |
++------------------------+-----------------------+
+12 rows in set (0.001 sec)
+
+mysql>  SELECT Ticker,Price, Volume_1D FROM sp500 WHERE Volume_1D > 100000000;
++--------+--------+-----------+
+| Ticker | Price  | Volume_1D |
++--------+--------+-----------+
+| NVDA   | 201.68 | 147784255 |
+| NFLX   |  97.31 | 115213495 |
+| INTC   |   68.5 | 111196199 |
++--------+--------+-----------+
+3 rows in set (0.001 sec)
 
 mysql> 
